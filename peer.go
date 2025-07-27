@@ -40,6 +40,14 @@ type Peer interface {
 	//
 	// http://enet.bespin.org/structENetPeer.html#a1873959810db7ac7a02da90469ee384e
 	GetData() []byte
+
+	//rtt
+	GetRoundTripTime() uint32
+	GetLastRoundTripTime() uint32
+	GetLowestRoundTripTime() uint32
+	GetRoundTripTimeVariance() uint32
+	GetLastRoundTripTimeVariance() uint32
+	GetHighestRoundTripTimeVariance() uint32
 }
 
 type enetPeer struct {
@@ -150,4 +158,29 @@ func (peer enetPeer) GetData() []byte {
 		// As many bytes as were indicated in the header.
 		C.int(binary.LittleEndian.Uint32(header)),
 	))
+}
+
+// rtt impl
+func (peer enetPeer) GetRoundTripTime() uint32 {
+	return uint32(peer.cPeer.roundTripTime)
+}
+
+func (peer enetPeer) GetLastRoundTripTime() uint32 {
+	return uint32(peer.cPeer.lastRoundTripTime)
+}
+
+func (peer enetPeer) GetLowestRoundTripTime() uint32 {
+	return uint32(peer.cPeer.lowestRoundTripTime)
+}
+
+func (peer enetPeer) GetRoundTripTimeVariance() uint32 {
+	return uint32(peer.cPeer.roundTripTimeVariance)
+}
+
+func (peer enetPeer) GetLastRoundTripTimeVariance() uint32 {
+	return uint32(peer.cPeer.lastRoundTripTimeVariance)
+}
+
+func (peer enetPeer) GetHighestRoundTripTimeVariance() uint32 {
+	return uint32(peer.cPeer.highestRoundTripTimeVariance)
 }
