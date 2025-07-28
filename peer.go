@@ -13,6 +13,8 @@ import (
 type Peer interface {
 	GetAddress() Address
 	GetConnectId() uint
+	GetIncomingPeerId() uint16
+	GetIncomingSessionId() uint8
 
 	Disconnect(data uint32)
 	DisconnectNow(data uint32)
@@ -62,6 +64,14 @@ func (peer enetPeer) GetAddress() Address {
 
 func (peer enetPeer) GetConnectId() uint {
 	return uint(peer.cPeer.connectID)
+}
+
+func (peer enetPeer) GetIncomingPeerId() uint16 {
+	return uint16(peer.cPeer.incomingPeerID)
+}
+
+func (peer enetPeer) GetIncomingSessionId() uint8 {
+	return uint8(peer.cPeer.incomingSessionID)
 }
 
 func (peer enetPeer) Disconnect(data uint32) {
